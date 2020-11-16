@@ -18,7 +18,7 @@ class Chat(QtWidgets.QMainWindow):
 
     def textEnvoyer(self):
         msg = self.ui.textUtilisateur.toPlainText()
-        print(msg)
+        print()
 
 
 if __name__ == "__main__":
