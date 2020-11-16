@@ -29,9 +29,9 @@
    <widget class="QPlainTextEdit" name="textUtilisateur">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>10</x>
       <y>630</y>
-      <width>531</width>
+      <width>521</width>
       <height>41</height>
      </rect>
     </property>
@@ -39,9 +39,9 @@
    <widget class="QPushButton" name="envoyer">
     <property name="geometry">
      <rect>
-      <x>550</x>
+      <x>540</x>
       <y>630</y>
-      <width>75</width>
+      <width>71</width>
       <height>41</height>
      </rect>
     </property>
@@ -49,15 +49,28 @@
      <string>Envoyer</string>
     </property>
    </widget>
-   <widget class="QListView" name="listMessages">
+   <widget class="QScrollArea" name="scrollArea">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>641</width>
-      <height>621</height>
+      <x>10</x>
+      <y>10</y>
+      <width>601</width>
+      <height>601</height>
      </rect>
     </property>
+    <property name="widgetResizable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="scrollAreaWidgetContents">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>599</width>
+       <height>599</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>

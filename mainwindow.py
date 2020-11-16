@@ -14,27 +14,25 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(640, 690)
-        MainWindow.setMinimumSize(QtCore.QSize(640, 690))
-        MainWindow.setMaximumSize(QtCore.QSize(640, 690))
-        MainWindow.setStyleSheet("background-Color: rgb(191, 191, 191);")
+        MainWindow.resize(640, 700)
+        MainWindow.setMinimumSize(QtCore.QSize(640, 700))
+        MainWindow.setMaximumSize(QtCore.QSize(640, 700))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.textUtilisateur = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.textUtilisateur.setGeometry(QtCore.QRect(5, 630, 531, 41))
-        self.textUtilisateur.setStyleSheet("background-Color: rgb(255, 255, 255);"
-        "border-radius: 15px;")
+        self.textUtilisateur.setGeometry(QtCore.QRect(10, 630, 521, 41))
         self.textUtilisateur.setObjectName("textUtilisateur")
         self.envoyer = QtWidgets.QPushButton(self.centralwidget)
-        self.envoyer.setGeometry(QtCore.QRect(550, 630, 75, 41))
-        self.envoyer.setIcon(QtGui.QIcon("Send.png"))
-        self.envoyer.setIconSize(QtCore.QSize(self.envoyer.size()))
+        self.envoyer.setGeometry(QtCore.QRect(540, 630, 71, 41))
         self.envoyer.setObjectName("envoyer")
-        self.envoyer.setStyleSheet("Color: rgb(191, 191, 191);")
-        self.listMessages = QtWidgets.QListView(self.centralwidget)
-        self.listMessages.setGeometry(QtCore.QRect(5, 5, 630, 621))
-        self.listMessages.setStyleSheet("background-Color: rgb(191, 191, 191);")
-        self.listMessages.setObjectName("listMessages")
+        self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
+        self.scrollArea.setGeometry(QtCore.QRect(10, 10, 601, 601))
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setObjectName("scrollArea")
+        self.scrollAreaWidgetContents = QtWidgets.QWidget()
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 599, 599))
+        self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -45,5 +43,5 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "ChatBot"))
-        
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.envoyer.setText(_translate("MainWindow", "Envoyer"))
