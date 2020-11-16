@@ -28,6 +28,7 @@ class Ui_MainWindow(object):
         self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
         self.textEdit.setGeometry(QtCore.QRect(13, 20, 591, 601))
         self.textEdit.setObjectName("textEdit")
+        self.textEdit.setReadOnly(True)
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
