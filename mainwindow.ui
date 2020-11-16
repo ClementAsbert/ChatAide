@@ -49,28 +49,15 @@
      <string>Envoyer</string>
     </property>
    </widget>
-   <widget class="QScrollArea" name="scrollArea">
+   <widget class="QTextEdit" name="textEdit">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>601</width>
+      <x>13</x>
+      <y>20</y>
+      <width>591</width>
       <height>601</height>
      </rect>
     </property>
-    <property name="widgetResizable">
-     <bool>true</bool>
-    </property>
-    <widget class="QWidget" name="scrollAreaWidgetContents">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>599</width>
-       <height>599</height>
-      </rect>
-     </property>
-    </widget>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>

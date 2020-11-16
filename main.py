@@ -7,7 +7,7 @@ from PyQt5 import QtWidgets
 class Chat(QtWidgets.QMainWindow):
     def __init__(self, title = "Default", parent = None):
         super(Chat, self).__init__(parent)
-        QtWidgets.QMainWindow.__init__(self)
+        self.main = QtWidgets.QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self._initSlotButton()
@@ -17,8 +17,8 @@ class Chat(QtWidgets.QMainWindow):
         self.ui.envoyer.clicked.connect(self.textEnvoyer)
 
     def textEnvoyer(self):
-        msg = self.ui.textUtilisateur.toPlainText()
-        print()
+        self.msg = self.ui.textUtilisateur.toPlainText()
+        print(msg)
 
 
 if __name__ == "__main__":
