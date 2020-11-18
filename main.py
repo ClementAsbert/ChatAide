@@ -20,13 +20,23 @@ class Chat(QtWidgets.QMainWindow):
 
 
     def Envoyer(self):
-        msg = self.ui.textUtilisateur.toPlainText()
+        self.msg = self.ui.textUtilisateur.toPlainText()
         self.ui.labelUtilisateur.setText(self.utilisateur.name)
         self.ui.textEdit.append(self.ui.labelUtilisateur.text())
         self.ui.textEdit.insertPlainText(" > ")
-        self.ui.textEdit.append(msg)
+        self.ui.textEdit.append(self.msg)
         self.ui.textEdit.append("")
         self.ui.textUtilisateur.clear()
+        self.respondBot()
+
+    def respondBot(self):
+        if "Bonjour" in self.msg:
+            rsp = "Bonjour comment ça va ?"
+        else:
+            rsp = "Je ne comprend pas ! "
+
+        self.ui.textEdit.append(rsp)
+        
 
 
 
