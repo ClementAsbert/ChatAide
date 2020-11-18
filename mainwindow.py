@@ -12,32 +12,43 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_MainWindow(object):
+    """Classe de l'affichage principale avec tous les élement de l'affichage"""
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(640, 700)
         MainWindow.setMinimumSize(QtCore.QSize(640, 700))
         MainWindow.setMaximumSize(QtCore.QSize(640, 700))
-        myfont = QtGui.QFont()
-        myfont.setBold(True)
+        
+        
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+
+        #QLineEdit
         self.textUtilisateur = QtWidgets.QLineEdit(self.centralwidget)
         self.textUtilisateur.setGeometry(QtCore.QRect(13, 630, 521, 41))
         self.textUtilisateur.setObjectName("textUtilisateur")
+
+        #QLabel
         self.labelUtilisateur = QtWidgets.QLabel()
         self.labelUtilisateur.setObjectName("labelUtilisateur")
         self.labelBot = QtWidgets.QLabel()
         self.labelBot.setObjectName("LabelBot")
+
+        #QButton
         self.envoyer = QtWidgets.QPushButton(self.centralwidget)
         self.envoyer.setGeometry(QtCore.QRect(540, 630, 66, 41))
         self.envoyer.setObjectName("envoyer")
         self.envoyer.setStyleSheet("background-color: yellow;"
         "color: Black;")
+
+        #QTextEdit
         self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
         self.textEdit.setGeometry(QtCore.QRect(13, 20, 591, 601))
         self.textEdit.setObjectName("textEdit")
         self.textEdit.setReadOnly(True)
+
         MainWindow.setCentralWidget(self.centralwidget)
+
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)

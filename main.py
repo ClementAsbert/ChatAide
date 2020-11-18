@@ -9,6 +9,7 @@ from PyQt5 import QtWidgets
 class Chat(QtWidgets.QMainWindow):
     def __init__(self, title = "Default", parent = None):
         super(Chat, self).__init__(parent)
+        """Construteur de la classe"""
         self.main = QtWidgets.QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
         self.utilisateur = Utilisateur()
@@ -18,10 +19,14 @@ class Chat(QtWidgets.QMainWindow):
         
         
     def _initSlotButton (self):
+        """Initialise les Slots"""
+
         self.ui.envoyer.clicked.connect(self.Envoyer)
         self.ui.textUtilisateur.returnPressed.connect(self.Envoyer)
 
     def Envoyer(self):
+        """Envoie le message taper par l'utilisateur"""
+
         self.msg =self.utilisateur.name + " : " + self.ui.textUtilisateur.text()
         self.ui.textEdit.append(self.msg)
         self.ui.textEdit.append("")
@@ -31,6 +36,7 @@ class Chat(QtWidgets.QMainWindow):
 
 
     def respondBot(self):
+        """ Envoi la réponsse du bot en fonction de la demande de l'utilisateur"""
         rsp = self.bot.name + " : "
 
         if "Bonjour" in self.msg:
@@ -46,6 +52,11 @@ class Chat(QtWidgets.QMainWindow):
 
         
     def image(self):
+        """Permet de Charger une image
+
+            En Cours de dévellopppement !!!
+
+        """
         self.img = self.ui.textEdit.toHtml() + "<img src = \"../img/maths.png\" alt =\"\"/>"
         self.ui.textEdit.setHtml(self.img)
 
