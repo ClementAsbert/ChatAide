@@ -4,9 +4,14 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QWidget
 from mainwindow import Ui_MainWindow
 from Utilisateur import Utilisateur
 from Bot import Bot
+<<<<<<< HEAD
 from PyQt5 import QtSql, QtWidgets
 from PyQt5.QtSql import QSqlDatabase
 import MySQLdb as mdb
+=======
+from PyQt5 import QtWidgets
+from PyQt5.QtCore import *
+>>>>>>> b554d1d6ec443680e059447228a471572214b01a
 
 class Chat(QtWidgets.QMainWindow):
     def __init__(self, title = "Default", parent = None):
@@ -48,9 +53,11 @@ class Chat(QtWidgets.QMainWindow):
         """Envoie le message taper par l'utilisateur"""
 
         self.msg =self.utilisateur.name + " : " + self.ui.textUtilisateur.text()
+        self.ui.textEdit.setAlignment(Qt.AlignRight)
         self.ui.textEdit.append(self.msg)
         self.ui.textEdit.append("")
         self.ui.textUtilisateur.clear()
+        self.ui.textEdit.setAlignment(Qt.AlignLeft)
         self.respondBot()
 
 
@@ -82,7 +89,7 @@ class Chat(QtWidgets.QMainWindow):
                 return True
         return False
         
-        
+
     def image(self):
         """Permet de Charger une image
 
