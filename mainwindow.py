@@ -64,14 +64,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-        #Connextion à la base de donnée
-        self.db = QSqlDatabase.addDatabase("QMYSQL")
-        self.db.setHostName("localhost")
-        self.db.setDatabaseName("ChatBot")
-        self.db.setUserName("root")
-        self.db.setPassword("root")
-
-        #Requete Sql
+        
 
 
     def retranslateUi(self, MainWindow):

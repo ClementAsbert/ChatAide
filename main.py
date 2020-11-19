@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QWidget
 from mainwindow import Ui_MainWindow
 from Utilisateur import Utilisateur
 from Bot import Bot
-from PyQt5 import QtWidgets
+from PyQt5 import QtSql, QtWidgets
+from PyQt5.QtSql import QSqlDatabase
+import MySQLdb as mdb
 
 class Chat(QtWidgets.QMainWindow):
     def __init__(self, title = "Default", parent = None):
@@ -16,6 +18,24 @@ class Chat(QtWidgets.QMainWindow):
         self.bot = Bot()
         self.ui.setupUi(self)
         self._initSlotButton()
+        self.connectDB()
+
+        
+        
+        
+    def connectDB(self):
+        """Connection à la base de donnée Local"""
+        try : 
+            db = mdb.connect('localhost', 'root', 'root', 'chatbot')
+            QMessageBox.about(self, 'Connextion', 'Successfully Connected to db')
+        except mdb.Error as e :
+            QMessageBox.about(self, 'Connextion', 'Not Connected Successfully')
+            sys.exit(1)
+        
+
+
+        
+        
         
         
     def _initSlotButton (self):
