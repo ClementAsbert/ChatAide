@@ -41,7 +41,9 @@ class Chat(QtWidgets.QMainWindow):
 
         self.msg = self.msg.lower()
 
-        if "bonjour" in self.msg:
+        if self.grosmots()==True:
+            rsp += "Surveille ton langage"
+        elif "bonjour" in self.msg:
             rsp += "Bonjour comment ça va ?"
         elif "maths" in self.msg:
             rsp += "Voici les exos de maths !"
@@ -52,6 +54,14 @@ class Chat(QtWidgets.QMainWindow):
         self.ui.textEdit.append(rsp)
         self.ui.textEdit.append("")
 
+    
+    def grosmots(self):
+        grm = ['girafe', 'tigre', 'singe', 'souris']
+        for f in grm:
+            if f in self.msg:
+                return True
+        return False
+        
         
     def image(self):
         """Permet de Charger une image
@@ -61,6 +71,7 @@ class Chat(QtWidgets.QMainWindow):
         """
         self.img = self.ui.textEdit.toHtml() + "<img src = \"../img/maths.png\" alt =\"\"/>"
         self.ui.textEdit.setHtml(self.img)
+
 
 
 if __name__ == "__main__":
