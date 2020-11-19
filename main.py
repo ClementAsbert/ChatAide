@@ -24,28 +24,23 @@ class Chat(QtWidgets.QMainWindow):
         self.connectDB()
 
         
-        
-        
     def connectDB(self):
         """Connection à la base de donnée Local"""
+
         try : 
             db = mdb.connect('localhost', 'root', 'root', 'chatbot')
             QMessageBox.about(self, 'Connextion', 'Successfully Connected to db')
         except mdb.Error as e :
             QMessageBox.about(self, 'Connextion', 'Not Connected Successfully')
             sys.exit(1)
-        
 
 
-        
-        
-        
-        
     def _initSlotButton (self):
         """Initialise les Slots"""
 
         self.ui.envoyer.clicked.connect(self.Envoyer)
         self.ui.textUtilisateur.returnPressed.connect(self.Envoyer)
+
 
     def Envoyer(self):
         """Envoie le message taper par l'utilisateur"""
@@ -68,12 +63,16 @@ class Chat(QtWidgets.QMainWindow):
 
     def respondBot(self):
         """ Envoi la réponsse du bot en fonction de la demande de l'utilisateur"""
-        #rsp = self.bot.name + " : "
+
         rsp = ""
+
+        #met la chaine de caractère en minuscule pour ne pas tenir compte de la casse"
         self.msg = self.msg.lower()
 
+        #Regarde si un gros mot en contenue dans la chaine de caractère
         if self.grosmots()==True:
             rsp += "Surveille ton langage"
+        #Reponsse simple du bot 
         elif "bonjour" in self.msg:
             rsp += "Bonjour comment ça va ?"
         elif "maths" in self.msg:
@@ -87,6 +86,7 @@ class Chat(QtWidgets.QMainWindow):
 
     
     def grosmots(self):
+        """Fonction qui gère les gros mots"""
         grm = ['girafe', 'tigre', 'singe', 'souris']
         for f in grm:
             if f in self.msg:
