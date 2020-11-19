@@ -39,7 +39,9 @@ class Chat(QtWidgets.QMainWindow):
         """ Envoi la réponsse du bot en fonction de la demande de l'utilisateur"""
         rsp = self.bot.name + " : "
 
-        if "Bonjour" in self.msg:
+        self.msg = self.msg.lower()
+
+        if "bonjour" in self.msg:
             rsp += "Bonjour comment ça va ?"
         elif "maths" in self.msg:
             rsp += "Voici les exos de maths !"
