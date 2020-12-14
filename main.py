@@ -22,6 +22,8 @@ class Chat(QtWidgets.QMainWindow):
         self.ui.setupUi(self)
         self._initSlotButton()
         self.connectDB()
+        
+
 
         
     def connectDB(self):
@@ -29,10 +31,14 @@ class Chat(QtWidgets.QMainWindow):
 
         try : 
             db = mdb.connect('localhost', 'root', 'root', 'chatbot')
+            self.cursor = db.cursor()
             QMessageBox.about(self, 'Connextion', 'Successfully Connected to db')
+            
         except mdb.Error as e :
             QMessageBox.about(self, 'Connextion', 'Not Connected Successfully')
             sys.exit(1)
+
+    
 
 
     def _initSlotButton (self):
@@ -76,8 +82,9 @@ class Chat(QtWidgets.QMainWindow):
         elif "bonjour" in self.msg:
             rsp += "Bonjour comment ça va ?"
         elif "maths" in self.msg:
-            rsp += "Voici les exos de maths !"
-            self.image()
+            self.cursor.execute("SELECT enonce FROM exercice WHERE idEx = 7;")
+            data = self.cursor.fetchone()
+            rsp += "%s" % data
         else:
             rsp += " Je ne comprend pas !"
         
