@@ -30,8 +30,8 @@ class Chat(QtWidgets.QMainWindow):
         """Connection à la base de donnée Local"""
 
         try : 
-            db = mdb.connect('localhost', 'root', 'root', 'chatbot')
-            self.cursor = db.cursor()
+            self.db = mdb.connect('localhost', 'root', 'root', 'chatbot')
+            self.cursor = self.db.cursor()
             QMessageBox.about(self, 'Connextion', 'Successfully Connected to db')
             
         except mdb.Error as e :
@@ -81,8 +81,21 @@ class Chat(QtWidgets.QMainWindow):
         #Reponsse simple du bot 
         elif "bonjour" in self.msg:
             rsp += "Bonjour comment ça va ?"
+
         elif "maths" in self.msg:
             self.cursor.execute("SELECT enonce FROM exercice WHERE idEx = 7;")
+            data = self.cursor.fetchone()
+            self.cursor.execute("SELECT reponse FROM exercice WHERE idEx = 7;")
+            reponse = self.cursor.fetchone()
+            rsp += "%s" % data
+            
+            if self.msg == reponse:
+                rsp += "Bravo tu à trouvé"
+            else :
+                rsp += "Essaye encore"
+
+        elif "français" in self.msg:
+            self.cursor.execute("SELECT enonce FROM exercice WHERE idEx= 1;")
             data = self.cursor.fetchone()
             rsp += "%s" % data
         else:
