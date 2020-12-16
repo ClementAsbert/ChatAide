@@ -18,11 +18,12 @@ class Chat(QtWidgets.QMainWindow):
         """Construteur de la classe"""
         self.main = QtWidgets.QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
-        self.utilisateur = Utilisateur()
+        self.utilisateur = Utilisateur("Thierry","CM2")
+        #self.main.setWindowTitle(self.utilisateur.name);
         self.bot = Bot()
         self.ui.setupUi(self)
         self._initSlotButton()
-        self.connectDB()
+        
         
 
 
@@ -51,19 +52,26 @@ class Chat(QtWidgets.QMainWindow):
 
     def Envoyer(self):
         """Envoie le message taper par l'utilisateur"""
+        
 
-        #self.msg =self.utilisateur.name + " : " + self.ui.textUtilisateur.text()
-        self.msg = self.ui.textUtilisateur.text()
-        self.ui.textEdit.setFontPointSize(16)
+        self.msg = self.ui.textUtilisateur.text()   #récupération du texte dans la textbox
+        
+        """Mise en forme général"""
+        self.ui.textEdit.setFontPointSize(16)       
         self.ui.textEdit.setFontWeight(1000)
-        self.ui.textEdit.setTextColor(QtGui.QColor(255,255,255))    #Text en blanc
-        self.ui.textEdit.setAlignment(Qt.AlignRight)            #Text à droite
+        self.ui.textEdit.setTextColor(QtGui.QColor(255,255,255))    #Mise en forme du texte en blanc
+        
+        """Mise en forme de la bulle utilisateur"""
+        self.ui.textEdit.setAlignment(Qt.AlignRight)                #Alignement du texte à droite
         self.ui.textEdit.setTextBackgroundColor(QtGui.QColor(84,130,53))#Fond en vert
-        self.ui.textEdit.append(self.msg)
-        self.ui.textEdit.append("")
-        self.ui.textUtilisateur.clear()
-        self.ui.textEdit.setAlignment(Qt.AlignLeft)
-        self.ui.textEdit.setTextBackgroundColor(QtGui.QColor(68,114,196))
+        
+        self.ui.textEdit.append(self.msg)   #copie du message dans la bulle
+        self.ui.textEdit.append("")         #Mise en forme des bulles
+        
+        self.ui.textUtilisateur.clear() #effacement de la textbox
+        
+        """Réponse du bot"""
+        
         self.respondBot()
 
 
@@ -73,19 +81,31 @@ class Chat(QtWidgets.QMainWindow):
 
         rsp = ""
 
+        """Mise en forme de la réponse du bot"""
+        self.ui.textEdit.setAlignment(Qt.AlignLeft)
+        self.ui.textEdit.setTextBackgroundColor(QtGui.QColor(68,114,196))
         #met la chaine de caractère en minuscule pour ne pas tenir compte de la casse"
         self.msg = self.msg.lower()
 
-        #Regarde si un gros mot en contenue dans la chaine de caractère
+        #Regarde en premier si un gros mot est contenue dans la chaine de caractère
         if self.grosmots()==True:
             rsp += "Surveille ton langage"
         #Reponsse simple du bot 
+        
         elif "bonjour" in self.msg:
             rsp += "Bonjour comment ça va ?"
 
         elif "maths" in self.msg:
+<<<<<<< HEAD
             self.cursor.execute("SELECT enonce FROM exercice WHERE idEx = 7;")
             data = self.cursor.fetchone()
+=======
+            print(w.utilisateur.niveau)
+            self.cursor.execute("SELECT enonce FROM exercice WHERE idMatiere = 1 AND classe = "+"'"+w.utilisateur.niveau+"'"+";") #attribue au curseur la valeur de l'exercice qui a pour matiere maths
+            data = self.cursor.fetchone()       #va chercher le contenue du curseur
+            self.cursor.execute("SELECT reponse FROM exercice WHERE idEx = 7;") #attribue au curseur la valeur de la réponse correspondant à l'exercice
+            reponse = self.cursor.fetchone()    #va chercher le contenue du curseur
+>>>>>>> fb46124841fa3922e30465811066c2902ac0c3cf
             rsp += "%s" % data
 
         elif "français" in self.msg:
@@ -114,7 +134,10 @@ class Chat(QtWidgets.QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     w = Chat()
+    w.setWindowTitle(w.utilisateur.name+' - '+w.utilisateur.niveau);
     w.show()
+    w.connectDB()
+
     sys.exit(app.exec_())
 
         

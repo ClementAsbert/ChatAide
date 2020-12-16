@@ -3,11 +3,12 @@
 
 class Utilisateur():
     """Classe de l'utilisateur"""
-    def __init__(self):
+    def __init__(self,nom,niveau):
         """Constructeur"""
 
-        self.__name = "Utilisateur"
-
+        self.niveau = niveau
+        self.__name = nom
+        
 
 
     @property
