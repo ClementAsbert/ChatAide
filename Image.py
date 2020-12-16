@@ -13,15 +13,16 @@ class App(QWidget):
     
     def initUI(self):
         self.setWindowTitle(self.title)
-        self.setMaximumSize(QtCore.QSize(1920,1080))
+        
         
     
         # Create widget
         label = QLabel(self)
-        pixmap = QPixmap('ImageMaths.jpg')
+        pixmap = QPixmap('img/ImageMaths.jpg')
         label.setPixmap(pixmap)
         self.resize(pixmap.width(),pixmap.height())
-        
+        self.setMinimumSize(pixmap.width(),pixmap.height())
+        self.setMaximumSize(pixmap.width(),pixmap.height())
         self.show()
 
 if __name__ == '__main__':

@@ -86,14 +86,7 @@ class Chat(QtWidgets.QMainWindow):
         elif "maths" in self.msg:
             self.cursor.execute("SELECT enonce FROM exercice WHERE idEx = 7;")
             data = self.cursor.fetchone()
-            self.cursor.execute("SELECT reponse FROM exercice WHERE idEx = 7;")
-            reponse = self.cursor.fetchone()
             rsp += "%s" % data
-            
-            if self.msg == reponse:
-                rsp += "Bravo tu à trouvé"
-            else :
-                rsp += "Essaye encore"
 
         elif "français" in self.msg:
             self.cursor.execute("SELECT enonce FROM exercice WHERE idEx= 1;")
