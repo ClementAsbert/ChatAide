@@ -96,16 +96,13 @@ class Chat(QtWidgets.QMainWindow):
             rsp += "Bonjour comment ça va ?"
 
         elif "maths" in self.msg:
-<<<<<<< HEAD
             self.cursor.execute("SELECT enonce FROM exercice WHERE idEx = 7;")
             data = self.cursor.fetchone()
-=======
             print(w.utilisateur.niveau)
             self.cursor.execute("SELECT enonce FROM exercice WHERE idMatiere = 1 AND classe = "+"'"+w.utilisateur.niveau+"'"+";") #attribue au curseur la valeur de l'exercice qui a pour matiere maths
             data = self.cursor.fetchone()       #va chercher le contenue du curseur
             self.cursor.execute("SELECT reponse FROM exercice WHERE idEx = 7;") #attribue au curseur la valeur de la réponse correspondant à l'exercice
             reponse = self.cursor.fetchone()    #va chercher le contenue du curseur
->>>>>>> fb46124841fa3922e30465811066c2902ac0c3cf
             rsp += "%s" % data
 
         elif "français" in self.msg:
