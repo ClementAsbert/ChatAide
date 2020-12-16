@@ -9,6 +9,7 @@ from PyQt5.QtSql import QSqlDatabase
 import MySQLdb as mdb
 from PyQt5.QtCore import *
 from PyQt5 import QtGui
+from Image import App
 
 
 class Chat(QtWidgets.QMainWindow):
@@ -98,6 +99,8 @@ class Chat(QtWidgets.QMainWindow):
             self.cursor.execute("SELECT enonce FROM exercice WHERE idEx= 1;")
             data = self.cursor.fetchone()
             rsp += "%s" % data
+        elif "image" in self.msg :
+            self.image = App()
         else:
             rsp += " Je ne comprend pas !"
         
@@ -112,16 +115,6 @@ class Chat(QtWidgets.QMainWindow):
             if f in self.msg:
                 return True
         return False
-        
-
-    def image(self):
-        """Permet de Charger une image
-
-            En Cours de dévellopppement !!!
-
-        """
-        self.img = self.ui.textEdit.toHtml() + "<img src = \"../img/maths.png\" alt =\"\"/>"
-        self.ui.textEdit.setHtml(self.img)
 
 
 
