@@ -23,6 +23,7 @@ class Chat(QtWidgets.QMainWindow):
         self.bot = Bot()
         self.ui.setupUi(self)
         self._initSlotButton()
+        self.image = App("img/ImageMaths.jpg")
         
         
 
@@ -87,48 +88,9 @@ class Chat(QtWidgets.QMainWindow):
         #met la chaine de caractère en minuscule pour ne pas tenir compte de la casse"
         self.msg = self.msg.lower()
 
-        #print(self.bot.respond(self.msg))
-
-        #Regarde en premier si un gros mot est contenue dans la chaine de caractère
-        """
-        if self.grosmots()==True:
-            rsp += "Surveille ton langage"
-        #Reponsse simple du bot 
-        
-        elif "bonjour" in self.msg:
-            rsp += "Bonjour comment ça va ?"
-        
-        elif "maths" in self.msg:
-            self.cursor.execute("SELECT enonce FROM exercice WHERE idEx = 7;")
-            data = self.cursor.fetchone()
-            print(w.utilisateur.niveau)
-            self.cursor.execute("SELECT enonce FROM exercice WHERE idMatiere = 1 AND classe = "+"'"+w.utilisateur.niveau+"'"+";") #attribue au curseur la valeur de l'exercice qui a pour matiere maths
-            data = self.cursor.fetchone()       #va chercher le contenue du curseur
-            self.cursor.execute("SELECT reponse FROM exercice WHERE idEx = 7;") #attribue au curseur la valeur de la réponse correspondant à l'exercice
-            reponse = self.cursor.fetchone()    #va chercher le contenue du curseur
-            rsp += "%s" % data
-
-        elif "français" in self.msg:
-            self.cursor.execute("SELECT enonce FROM exercice WHERE idEx= 1;")
-            data = self.cursor.fetchone()
-            rsp += "%s" % data
-        elif "image" in self.msg :
-            self.image = App("BDD/ImageExo/bonMot1.png")
-        else:
-            rsp += " Je ne comprend pas !"
-        """
         rsp = self.bot.respond(self.msg,self.cursor)
         self.ui.textEdit.append(rsp)
         self.ui.textEdit.append("")
-
-    
-    def grosmots(self):
-        """Fonction qui gère les gros mots"""
-        grm = ['girafe', 'tigre', 'singe', 'souris']
-        for f in grm:
-            if f in self.msg:
-                return True
-        return False
 
 
 
