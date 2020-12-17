@@ -88,7 +88,7 @@ class Chat(QtWidgets.QMainWindow):
         #met la chaine de caractère en minuscule pour ne pas tenir compte de la casse"
         self.msg = self.msg.lower()
 
-        rsp = self.bot.respond(self.msg,self.cursor)
+        rsp = self.bot.respond(self.msg,self.cursor,self.utilisateur)
         self.ui.textEdit.append(rsp)
         self.ui.textEdit.append("")
 
@@ -97,7 +97,7 @@ class Chat(QtWidgets.QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     w = Chat()
-    w.setWindowTitle(w.utilisateur.name+' - '+w.utilisateur.niveau);
+    w.setWindowTitle(w.utilisateur.name+' - '+w.utilisateur.niveau)
     w.show()
     w.connectDB()
 
