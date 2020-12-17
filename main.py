@@ -23,7 +23,7 @@ class Chat(QtWidgets.QMainWindow):
         self.bot = Bot()
         self.ui.setupUi(self)
         self._initSlotButton()
-        self.image = App("img/ImageMaths.jpg")
+        
         
         
 
