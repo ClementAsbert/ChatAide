@@ -58,6 +58,7 @@ class Bot():
             reponseFinal = "Je ne comprend pas"
         else:
             reponseFinal = matiere[matiereScore.index(max(matiereScore))]
+            print (reponseFinal)
             reponseFinal = self.choix(reponseFinal,cursor)
             print(reponseFinal)
         
@@ -65,7 +66,12 @@ class Bot():
 
 
     def choix(self,matiere,cursor):
-        cursor.execute("SELECT enonce FROM exercice WHERE idMatiere = "+"'"+matiere+"'"+";")
+        if matiere == "mathématiques":
+            matiere = "mathematique"
+        if matiere == "français":
+            matiere = "francais"
+        cursor.execute("SELECT enonce FROM exercice NATURAL JOIN matiere WHERE nom = "+"'"+matiere+"'"+";") # 
+        #print(cursor.fetchall())
         enonce = cursor.fetchone()
         rsp = "%s" % enonce
         return rsp
