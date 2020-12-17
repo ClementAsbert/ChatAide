@@ -18,9 +18,11 @@ class Bot():
         return self.__name
 
     def respond(self,demande,cursor):
-        matiere = ("Bonjour","français","mathématiques","histoire","géographie")
-        matiereScore = [0,0,0,0,0]
+        matiere = ("français","mathématiques","histoire","géographie")
+        matiereScore = [0,0,0,0]
         rep = demande
+
+        
 
         deb=0
         fin=2
@@ -43,7 +45,7 @@ class Bot():
                 ok=True
         
         
-        print(matiereScore)
+        #print(matiereScore)
         max1 = -1
         max2 = -1
 
@@ -53,15 +55,19 @@ class Bot():
             elif a > max2:
                 max2 = a
 
-
-        if max(matiereScore)==min(matiereScore) or max1<=max2+2:
-            reponseFinal = "Je ne comprend pas"
+        if max(matiereScore)==min(matiereScore) or max1<=max2+2 and 'bonjour' in demande :
+            return "Bonjour :) "
+        elif max(matiereScore)==min(matiereScore) or max1<=max2+2:
+            return "Je ne comprend pas"
         else:
+            
+
             reponseFinal = matiere[matiereScore.index(max(matiereScore))]
-            print (reponseFinal)
+            #print (reponseFinal)
             reponseFinal = self.choix(reponseFinal,cursor)
-            print(reponseFinal)
-        
+            #print(reponseFinal)
+            if 'bonjour' in demande:
+                reponseFinal = 'Bonjour, ' + reponseFinal
         return reponseFinal
 
 
@@ -70,8 +76,7 @@ class Bot():
             matiere = "mathematique"
         if matiere == "français":
             matiere = "francais"
-        cursor.execute("SELECT enonce FROM exercice NATURAL JOIN matiere WHERE nom = "+"'"+matiere+"'"+";") # 
-        #print(cursor.fetchall())
+        cursor.execute("SELECT enonce FROM exercice NATURAL JOIN matiere WHERE nom = "+"'"+matiere+"'"+";") 
         enonce = cursor.fetchone()
         rsp = "%s" % enonce
         return rsp
