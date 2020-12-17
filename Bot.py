@@ -22,8 +22,8 @@ class Bot():
         return self.__name
 
     def respond(self,demande,cursor,user):
-        matiere = ("français","mathématiques","histoire","géographie")
-        matiereScore = [0,0,0,0]
+        matiere = ("image","français","mathématiques","histoire","géographie")
+        matiereScore = [0,0,0,0,0]
         rep = " "+demande
 
 
@@ -95,13 +95,17 @@ class Bot():
         if matiere == "français":
             matiere = "francais"
         
+        if matiere=="image":
+            self.SendImage()
+            return "Voici votre exercice en image"
+
         """Attribution de la réponse au bot"""
-        cursor.execute("SELECT reponse FROM exercice NATURAL JOIN matiere WHERE nom = "+"'"+matiere+"'"+" AND classe= "+"'"+user.niveau+"'"+" ;") 
+        cursor.execute("SELECT reponse FROM exercice NATURAL JOIN matiere WHERE nom = "+"'"+matiere+"'"+" AND classe= "+"'"+user.niveau+"'"+";") # AND idEx NOT IN "+"'".join(self.exoFini)+"'"+" 
         reponse = cursor.fetchone()
         self.reponse = "%s" % reponse
 
         """lecture de l'enonce"""
-        cursor.execute("SELECT enonce,idEx FROM exercice NATURAL JOIN matiere WHERE nom = "+"'"+matiere+"'"+" AND classe= "+"'"+user.niveau+"'"+"  ;") 
+        cursor.execute("SELECT enonce,idEx FROM exercice NATURAL JOIN matiere WHERE nom = "+"'"+matiere+"'"+" AND classe= "+"'"+user.niveau+"'"+" ;") #AND idEx NOT IN "+"'".join(self.exoFini)+"'"+" 
         enonce = cursor.fetchone()
         rsp = "%s" % enonce[0]
         self.exoEnCours = "%d" % enonce[1]
