@@ -6,10 +6,12 @@ from PyQt5.QtGui import QIcon, QPixmap
 
 class App(QWidget):
 
-    def __init__(self):
+    def __init__(self,image):
         super().__init__()
-        self.title = 'PyQt5 image - pythonspot.com'
+        self.title = 'PyQt5 image'
+        self.image = image
         self.initUI()
+        
     
     def initUI(self):
         self.setWindowTitle(self.title)
@@ -18,7 +20,7 @@ class App(QWidget):
     
         # Create widget
         label = QLabel(self)
-        pixmap = QPixmap('img/ImageMaths.jpg')
+        pixmap = QPixmap(self.image)
         label.setPixmap(pixmap)
         self.resize(pixmap.width(),pixmap.height())
         self.setMinimumSize(pixmap.width(),pixmap.height())

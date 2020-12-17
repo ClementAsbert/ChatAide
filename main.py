@@ -110,7 +110,7 @@ class Chat(QtWidgets.QMainWindow):
             data = self.cursor.fetchone()
             rsp += "%s" % data
         elif "image" in self.msg :
-            self.image = App()
+            self.image = App("BDD/ImageExo/bonMot1.png")
         else:
             rsp += " Je ne comprend pas !"
         
