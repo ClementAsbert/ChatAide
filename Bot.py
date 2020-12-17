@@ -96,12 +96,12 @@ class Bot():
             matiere = "francais"
         
         """Attribution de la réponse au bot"""
-        cursor.execute("SELECT reponse FROM exercice NATURAL JOIN matiere WHERE nom = "+"'"+matiere+"'"+" AND classe= "+"'"+user.niveau+"'"+" AND idEx NOT IN "+"'"+self.exoFini+"'"+" ;") 
+        cursor.execute("SELECT reponse FROM exercice NATURAL JOIN matiere WHERE nom = "+"'"+matiere+"'"+" AND classe= "+"'"+user.niveau+"'"+" ;") 
         reponse = cursor.fetchone()
         self.reponse = "%s" % reponse
 
         """lecture de l'enonce"""
-        cursor.execute("SELECT enonce,idEx FROM exercice NATURAL JOIN matiere WHERE nom = "+"'"+matiere+"'"+" AND classe= "+"'"+user.niveau+"'"+" AND idEx NOT IN "+"'"+self.exoFini+"'"+"  ;") 
+        cursor.execute("SELECT enonce,idEx FROM exercice NATURAL JOIN matiere WHERE nom = "+"'"+matiere+"'"+" AND classe= "+"'"+user.niveau+"'"+"  ;") 
         enonce = cursor.fetchone()
         rsp = "%s" % enonce[0]
         self.exoEnCours = "%d" % enonce[1]
