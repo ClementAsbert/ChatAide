@@ -87,14 +87,17 @@ class Chat(QtWidgets.QMainWindow):
         #met la chaine de caractère en minuscule pour ne pas tenir compte de la casse"
         self.msg = self.msg.lower()
 
+        #print(self.bot.respond(self.msg))
+
         #Regarde en premier si un gros mot est contenue dans la chaine de caractère
+        """
         if self.grosmots()==True:
             rsp += "Surveille ton langage"
         #Reponsse simple du bot 
         
         elif "bonjour" in self.msg:
             rsp += "Bonjour comment ça va ?"
-
+        
         elif "maths" in self.msg:
             self.cursor.execute("SELECT enonce FROM exercice WHERE idEx = 7;")
             data = self.cursor.fetchone()
@@ -113,7 +116,8 @@ class Chat(QtWidgets.QMainWindow):
             self.image = App()
         else:
             rsp += " Je ne comprend pas !"
-        
+        """
+        rsp = self.bot.respond(self.msg,self.cursor)
         self.ui.textEdit.append(rsp)
         self.ui.textEdit.append("")
 
