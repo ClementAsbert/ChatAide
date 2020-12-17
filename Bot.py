@@ -20,9 +20,11 @@ class Bot():
     def respond(self,demande,cursor):
         matiere = ("français","mathématiques","histoire","géographie")
         matiereScore = [0,0,0,0]
-        rep = demande
+        rep = " "+demande
 
-        
+        if self.grosmot(rep,cursor):
+            return "Surveille ton langage ! "
+
 
         deb=0
         fin=2
@@ -55,7 +57,8 @@ class Bot():
             elif a > max2:
                 max2 = a
 
-        if max(matiereScore)==min(matiereScore) or max1<=max2+2 and 'bonjour' in demande :
+        print('bonjour' in demande);
+        if (max(matiereScore)==min(matiereScore) or max1<=max2+2) and ('bonjour' in demande)==True:
             return "Bonjour :) "
         elif max(matiereScore)==min(matiereScore) or max1<=max2+2:
             return "Je ne comprend pas"
@@ -80,5 +83,17 @@ class Bot():
         enonce = cursor.fetchone()
         rsp = "%s" % enonce
         return rsp
+
+
+    def grosmot(self,str,cursor):
+        cursor.execute("SELECT mot FROM grotmot;")
+        grosmot = cursor.fetchall()
+        for mot in grosmot:
+            gromo = " "+mot[0]
+            if gromo in str:
+                return True
+        return False
+
+
 
 
