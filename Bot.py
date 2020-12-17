@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from Image import App
 class Bot():
     """Classe du Bot"""
     def __init__(self):
@@ -22,10 +22,12 @@ class Bot():
         matiereScore = [0,0,0,0]
         rep = " "+demande
 
+
+
+
         if self.grosmot(rep,cursor):
             return "Surveille ton langage ! "
-
-
+        
         deb=0
         fin=2
         taille=len(rep)
@@ -72,6 +74,7 @@ class Bot():
             if 'bonjour' in demande:
                 reponseFinal = 'Bonjour, ' + reponseFinal
         return reponseFinal
+            
 
 
     def choix(self,matiere,cursor):
@@ -93,6 +96,9 @@ class Bot():
             if gromo in str:
                 return True
         return False
+
+    def SendImage(self):
+        self.image.App("img/ImageMaths.jpg")
 
 
 
