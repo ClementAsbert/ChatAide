@@ -66,6 +66,8 @@ class Chat(QtWidgets.QMainWindow):
         self.ui.textEdit.setAlignment(Qt.AlignRight)                #Alignement du texte à droite
         self.ui.textEdit.setTextBackgroundColor(QtGui.QColor(84,130,53))#Fond en vert
         
+        if self.msg == "":
+            self.msg = "..."
         self.ui.textEdit.append(self.msg)   #copie du message dans la bulle
         self.ui.textEdit.append("")         #Mise en forme des bulles
         
