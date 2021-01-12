@@ -5,10 +5,10 @@ class Bot():
     """Classe du Bot"""
     def __init__(self):
         """Constructeur"""
-        self.exoEnCours = 0
+        self.exoEnCours = None
         self.reponse = ""
         self.attenteReponse = False
-        self.exoFini = []
+        self.exosFini = []
         self.__name = "Bot"
 
 
@@ -21,27 +21,85 @@ class Bot():
         """
         return self.__name
 
-    def respond(self,demande,cursor,user):
-        matiere = ("image","français","mathématiques","histoire","géographie")
-        matiereScore = [0,0,0,0,0]
-        rep = " "+demande
 
+
+    def respond(self,demande,cursor,user):
+        
+        rep = " "+demande #On met un espace au début du message pour un meilleur filtrage des gros mots
+        matiereTrouve = self.scanMatiere(rep)
+        grosMots = self.grosmot(rep,cursor)
 
 
         """Vérifie qu'il n'y ai pas de gros mots"""
-        if self.grosmot(rep,cursor):
+        if grosMots:
             return "Surveille ton langage ! "
         
-        if self.attenteReponse:
+        
+        """Cas où le bot est en attente d'une réponse"""
+        if self.attenteReponse: 
             if self.reponse in demande:
                 self.attenteReponse = False
-                self.exoFini.append(self.exoEnCours)
-                self.exoEnCours = 0
+                self.exosFini.append(self.exoEnCours)
+                self.exoEnCours = None
                 return "Bravo tu as réussi l'exercice "
+            elif matiereTrouve!=None: #Cas ou l'utilisateur demande un autre exercice
+                reponseFinal = self.enonce(matiereTrouve,cursor,user)
             else:
                 return "Essaye encore :/ "
+        else:
+            
+            """Si le Bot n'attend pas de réponse"""
+            if(matiereTrouve!=None):    #Si le scan détecte une matiere dans la réponse alors lui assigne un énoncé
+                reponseFinal = self.enonce(matiereTrouve,cursor,user)
+            elif((matiereTrouve!=None) and ('bonjour' in demande)):
+                reponseFinal = 'Bonjour, ' + reponseFinal
+            elif((matiereTrouve==None) and ('bonjour' in demande)):
+                reponseFinal = "Bonjour :)"
+            else:
+                reponseFinal = "Je ne comprends pas"
 
-        """Detecte la matiere souhaité"""
+        
+        return reponseFinal
+            
+
+
+
+    """Attribut un énoncé de la base de données à une matière donnée et retourne l'énoncé"""
+    def enonce(self,matiere,cursor,user):
+        if (matiere == "histoire") or (matiere == "géographie"):
+            rsp = "Matière non prise en comptes"
+
+        if matiere == "mathématiques":
+            matiere = "mathematique"
+        if matiere == "français":
+            matiere = "francais"
+        
+        if matiere=="image":
+            self.SendImage()
+            return "Voici votre exercice en image"
+
+        """Attribution de la réponse au bot"""
+        cursor.execute("SELECT reponse FROM exercice NATURAL JOIN matiere WHERE nom = "+"'"+matiere+"'"+" AND classe= "+"'"+user.niveau+"'"+";") # AND idEx NOT IN "+"'".join(self.exoFini)+"'"+" 
+        reponse = cursor.fetchone()
+        self.reponse = "%s" % reponse
+
+        """lecture de l'enonce"""
+        cursor.execute("SELECT enonce,idEx FROM exercice NATURAL JOIN matiere WHERE nom = "+"'"+matiere+"'"+" AND classe= "+"'"+user.niveau+"'"+" ;") #AND idEx NOT IN "+"'".join(self.exoFini)+"'"+" 
+        enonce = cursor.fetchone()
+        rsp = "%s" % enonce[0]
+        self.exoEnCours = "%d" % enonce[1]
+        
+        """Met le bot en attente de la Réponse"""
+        self.attenteReponse = True
+        
+        return rsp
+
+
+    def scanMatiere(self,rep):
+        
+        matiere = ("image","français","mathématiques","histoire","géographie")
+        matiereScore = [0,0,0,0,0]
+        
         deb=0
         fin=2
         taille=len(rep)
@@ -70,54 +128,18 @@ class Bot():
                 max1 = a
             elif a > max2:
                 max2 = a
-
-        """Vérifie si l'utilitsateur salut le bot"""
-        if (max(matiereScore)==min(matiereScore) or max1<=max2+2) and ('bonjour' in demande)==True:
-            return "Bonjour :) "
-        elif max(matiereScore)==min(matiereScore) or max1<=max2+2:
-            return "Je ne comprend pas"
+        
+        """Réponse final du scan"""
+        if (max(matiereScore)==min(matiereScore) or max1<=max2+3): #Si aucune matiere est détecté
+            return None
         else:
-            
+            return matiere[matiereScore.index(max(matiereScore))]
 
-            reponseFinal = matiere[matiereScore.index(max(matiereScore))]
-            reponseFinal = self.enonce(reponseFinal,cursor,user)
-            
-            """Cas où l'utilisateur dit bonjour et demande un énoncé"""
-            if 'bonjour' in demande:
-                reponseFinal = 'Bonjour, ' + reponseFinal
-        return reponseFinal
-            
-
-
-    def enonce(self,matiere,cursor,user):
-        if matiere == "mathématiques":
-            matiere = "mathematique"
-        if matiere == "français":
-            matiere = "francais"
-        
-        if matiere=="image":
-            self.SendImage()
-            return "Voici votre exercice en image"
-
-        """Attribution de la réponse au bot"""
-        cursor.execute("SELECT reponse FROM exercice NATURAL JOIN matiere WHERE nom = "+"'"+matiere+"'"+" AND classe= "+"'"+user.niveau+"'"+";") # AND idEx NOT IN "+"'".join(self.exoFini)+"'"+" 
-        reponse = cursor.fetchone()
-        self.reponse = "%s" % reponse
-
-        """lecture de l'enonce"""
-        cursor.execute("SELECT enonce,idEx FROM exercice NATURAL JOIN matiere WHERE nom = "+"'"+matiere+"'"+" AND classe= "+"'"+user.niveau+"'"+" ;") #AND idEx NOT IN "+"'".join(self.exoFini)+"'"+" 
-        enonce = cursor.fetchone()
-        rsp = "%s" % enonce[0]
-        self.exoEnCours = "%d" % enonce[1]
-        
         
 
-        """Met le bot en attente de la Réponse"""
-        self.attenteReponse = True
-
-        return rsp
 
 
+    """Vérifie si il y a un gros mot dans le texte donné"""
     def grosmot(self,str,cursor):
         cursor.execute("SELECT mot FROM grotmot;")
         grosmot = cursor.fetchall()
@@ -127,7 +149,7 @@ class Bot():
                 return True
         return False
 
-
+    """Envoie d'une image"""
     def SendImage(self):
         self.image = App("img/ImageMaths.jpg")
 
