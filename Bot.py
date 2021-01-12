@@ -67,7 +67,7 @@ class Bot():
     """Attribut un énoncé de la base de données à une matière donnée et retourne l'énoncé"""
     def enonce(self,matiere,cursor,user):
         if (matiere == "histoire") or (matiere == "géographie"):
-            rsp = "Matière non prise en comptes"
+            return "Pas d'exercices dans cette matière :( "
 
         if matiere == "mathématiques":
             matiere = "mathematique"
