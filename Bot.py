@@ -58,7 +58,7 @@ class Bot():
             else:
                 reponseFinal = "Je ne comprends pas"
 
-        
+       
         return reponseFinal
             
 
@@ -78,17 +78,24 @@ class Bot():
             self.SendImage()
             return "Voici votre exercice en image"
 
-        """Attribution de la réponse au bot"""
-        cursor.execute("SELECT reponse FROM exercice NATURAL JOIN matiere WHERE nom = "+"'"+matiere+"'"+" AND classe= "+"'"+user.niveau+"'"+";") # AND idEx NOT IN "+"'".join(self.exoFini)+"'"+" 
-        reponse = cursor.fetchone()
-        self.reponse = "%s" % reponse
 
-        """lecture de l'enonce"""
-        cursor.execute("SELECT enonce,idEx FROM exercice NATURAL JOIN matiere WHERE nom = "+"'"+matiere+"'"+" AND classe= "+"'"+user.niveau+"'"+" ;") #AND idEx NOT IN "+"'".join(self.exoFini)+"'"+" 
+        """Recherche d'exercice dans la BDD"""
+        cursor.execute("SELECT enonce,idEx,reponse FROM exercice NATURAL JOIN matiere WHERE nom = "+"'"+matiere+"'"+" AND classe= "+"'"+user.niveau+"'"+" ;") #AND idEx NOT IN "+"'".join(self.exoFini)+"'"+" 
         enonce = cursor.fetchone()
         rsp = "%s" % enonce[0]
+        self.reponse = "%s" % enonce[2]
         self.exoEnCours = "%d" % enonce[1]
+        while (self.exoEnCours in self.exosFini):
+            enonce = cursor.fetchone()
+            if(enonce==None):
+                return "Tu as fini tout les exercices de cette matière"
+            else:
+                rsp = "%s" % enonce[0]
+                self.reponse = "%s" % enonce[2]
+                self.exoEnCours = "%d" % enonce[1]
         
+
+
         """Met le bot en attente de la Réponse"""
         self.attenteReponse = True
         
