@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 from Image import App
+import string as string
+import re
+
 
 class Bot():
     """Classe du Bot"""
@@ -23,11 +26,10 @@ class Bot():
 
 
 
-    def respond(self,demande,cursor,user):
+    def respond(self,rep,cursor,user):
         
-        rep = " "+demande #On met un espace au début du message pour un meilleur filtrage des gros mots
-        matiereTrouve = self.scanMatiere(rep)
-        grosMots = self.grosmot(rep,cursor)
+        matiereTrouve = self.scanMatiere(rep) #détecte si la personne mentionne une matiere en particulier
+        grosMots = self.grosmot(rep,cursor) #détecte si la personne a écrit un gros motsd dans son message
 
 
         """Vérifie qu'il n'y ai pas de gros mots"""
@@ -37,7 +39,7 @@ class Bot():
         
         """Cas où le bot est en attente d'une réponse"""
         if self.attenteReponse: 
-            if self.reponse in demande:
+            if self.reponse in rep:
                 self.attenteReponse = False
                 self.exosFini.append(self.exoEnCours)
                 self.exoEnCours = None
@@ -51,9 +53,9 @@ class Bot():
             """Si le Bot n'attend pas de réponse"""
             if(matiereTrouve!=None):    #Si le scan détecte une matiere dans la réponse alors lui assigne un énoncé
                 reponseFinal = self.enonce(matiereTrouve,cursor,user)
-            elif((matiereTrouve!=None) and ('bonjour' in demande)):
+            elif((matiereTrouve!=None) and ('bonjour' in rep)):
                 reponseFinal = 'Bonjour, ' + reponseFinal
-            elif((matiereTrouve==None) and ('bonjour' in demande)):
+            elif((matiereTrouve==None) and ('bonjour' in rep)):
                 reponseFinal = "Bonjour :)"
             else:
                 reponseFinal = "Je ne comprends pas"
@@ -97,8 +99,7 @@ class Bot():
         return rsp
 
 
-    def scanMatiere(self,rep):
-        
+    def scanMatiere(self,rep): 
         matiere = ("image","français","mathématiques","histoire","géographie")
         matiereScore = [0,0,0,0,0]
         
@@ -143,10 +144,11 @@ class Bot():
 
     """Vérifie si il y a un gros mot dans le texte donné"""
     def grosmot(self,str,cursor):
+        str = " "+str
         cursor.execute("SELECT mot FROM grotmot;")
         grosmot = cursor.fetchall()
         for mot in grosmot:
-            gromo = " "+mot[0]
+            gromo = " "+mot[0]+" "
             if gromo in str:
                 return True
         return False
