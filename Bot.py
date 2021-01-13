@@ -68,11 +68,6 @@ class Bot():
     def enonce(self,matiere,cursor,user):
         if (matiere == "histoire") or (matiere == "géographie"):
             return "Pas d'exercices dans cette matière :( "
-
-        if matiere == "mathématiques":
-            matiere = "mathematique"
-        if matiere == "français":
-            matiere = "francais"
         
         if matiere=="image":
             self.SendImage()
