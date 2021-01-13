@@ -19,10 +19,10 @@ class Chat(QtWidgets.QMainWindow):
         self.main = QtWidgets.QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
         self.utilisateur = Utilisateur("Thierry","CM2")
-        #self.main.setWindowTitle(self.utilisateur.name);
         self.bot = Bot()
         self.ui.setupUi(self)
         self._initSlotButton()
+        
         
         
         
@@ -35,10 +35,10 @@ class Chat(QtWidgets.QMainWindow):
         try : 
             self.db = mdb.connect('localhost', 'root', 'root', 'chatbot')
             self.cursor = self.db.cursor()
-            QMessageBox.about(self, 'Connextion', 'Successfully Connected to db')
+            QMessageBox.about(self, 'Connexion', 'Successfully Connected to database')
             
         except mdb.Error as e :
-            QMessageBox.about(self, 'Connextion', 'Not Connected Successfully')
+            QMessageBox.about(self, 'Connexion', 'Unable to connect to the database')
             sys.exit(1)
 
     
@@ -46,13 +46,14 @@ class Chat(QtWidgets.QMainWindow):
 
     def _initSlotButton (self):
         """Initialise les Slots"""
-
         self.ui.envoyer.clicked.connect(self.Envoyer)
         self.ui.textUtilisateur.returnPressed.connect(self.Envoyer)
+        #self.salutationBot()
+       
 
 
     def Envoyer(self):
-        """Envoie le message taper par l'utilisateur"""
+        """Envoie le message tapé par l'utilisateur"""
         
 
         self.msg = self.ui.textUtilisateur.text()   #récupération du texte dans la textbox
@@ -94,6 +95,17 @@ class Chat(QtWidgets.QMainWindow):
         self.ui.textEdit.append(rsp)
         self.ui.textEdit.append("")
 
+    def salutationBot(self):
+        """Mise en forme de la réponse du bot"""
+        self.ui.textEdit.setFontPointSize(16)       
+        self.ui.textEdit.setFontWeight(1000)
+        self.ui.textEdit.setTextColor(QtGui.QColor(255,255,255))    #Mise en forme du texte en blanc
+        self.ui.textEdit.setAlignment(Qt.AlignLeft)
+        self.ui.textEdit.setTextBackgroundColor(QtGui.QColor(68,114,196))
+            
+        rsp = "Salut "+self.utilisateur.name+", je m'appelle ChatAide et je suis là pour t'aider. Demande moi une matière parmis laquelle tu voudrait t'améliorer."
+        self.ui.textEdit.append(rsp)
+        self.ui.textEdit.append("")
 
 
 if __name__ == "__main__":
@@ -102,9 +114,10 @@ if __name__ == "__main__":
     w.setWindowTitle(w.utilisateur.name+' - '+w.utilisateur.niveau)
     w.show()
     w.connectDB()
+    w.salutationBot()
 
     sys.exit(app.exec_())
 
-        
+
 
 

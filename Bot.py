@@ -13,6 +13,7 @@ class Bot():
         self.attenteReponse = False
         self.exosFini = []
         self.__name = "Bot"
+        
 
 
     @property
@@ -156,6 +157,9 @@ class Bot():
     """Envoie d'une image"""
     def SendImage(self):
         self.image = App("img/ImageMaths.jpg")
+
+    
+
 
 
 
