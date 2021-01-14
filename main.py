@@ -18,7 +18,7 @@ class Chat(QtWidgets.QMainWindow):
         """Construteur de la classe"""
         self.main = QtWidgets.QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
-        self.utilisateur = Utilisateur("Thierry","CM2")
+        self.utilisateur = Utilisateur("Thierry","CE1")
         self.bot = Bot()
         self.ui.setupUi(self)
         self._initSlotButton()

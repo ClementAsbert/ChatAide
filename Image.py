@@ -27,6 +27,10 @@ class App(QWidget):
         self.setMaximumSize(pixmap.width(),pixmap.height())
         self.show()
 
+    def quitter(self):
+        self.close()
+
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = App()

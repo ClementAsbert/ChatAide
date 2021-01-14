@@ -40,10 +40,12 @@ class Bot():
         
         """Cas où le bot est en attente d'une réponse"""
         if self.attenteReponse: 
-            if self.reponse in rep:
+            if self.reponse.lower() in rep:
                 self.attenteReponse = False
                 self.exosFini.append(self.exoEnCours)
                 self.exoEnCours = None
+                if self.image!=None:
+                    self.image.quitter()
                 return "Bravo tu as réussi l'exercice "
             elif matiereTrouve!=None: #Cas ou l'utilisateur demande un autre exercice
                 reponseFinal = self.enonce(matiereTrouve,cursor,user)
@@ -73,16 +75,17 @@ class Bot():
             return "Pas d'exercices dans cette matière :( "
         
         if matiere=="image":
-            self.SendImage()
+            #self.SendImage()
             return "Voici votre exercice en image"
 
 
         """Recherche d'exercice dans la BDD"""
-        cursor.execute("SELECT enonce,idEx,reponse FROM exercice NATURAL JOIN matiere WHERE nom = "+"'"+matiere+"'"+" AND classe= "+"'"+user.niveau+"'"+" ;") #AND idEx NOT IN "+"'".join(self.exoFini)+"'"+" 
+        cursor.execute("SELECT enonce,idEx,reponse,Qimage FROM exercice NATURAL JOIN matiere WHERE nom = "+"'"+matiere+"'"+" AND classe= "+"'"+user.niveau+"'"+" ;") #AND idEx NOT IN "+"'".join(self.exoFini)+"'"+" 
         enonce = cursor.fetchone()
         rsp = "%s" % enonce[0]
         self.reponse = "%s" % enonce[2]
         self.exoEnCours = "%d" % enonce[1]
+        
         while (self.exoEnCours in self.exosFini):
             enonce = cursor.fetchone()
             if(enonce==None):
@@ -91,7 +94,11 @@ class Bot():
                 rsp = "%s" % enonce[0]
                 self.reponse = "%s" % enonce[2]
                 self.exoEnCours = "%d" % enonce[1]
-        
+        if (enonce[3]!=None):
+            img = "%s" % enonce[3] 
+            img = img[2:]
+            img = img[:-1]
+            self.SendImage(img)
 
 
         """Met le bot en attente de la Réponse"""
@@ -155,8 +162,8 @@ class Bot():
         return False
 
     """Envoie d'une image"""
-    def SendImage(self):
-        self.image = App("img/ImageMaths.jpg")
+    def SendImage(self,source):
+        self.image = App(source)
 
     
 
