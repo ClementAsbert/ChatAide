@@ -6,13 +6,11 @@ class Utilisateur():
     
     
     """Classe de l'utilisateur"""
-    def __init__(self):
+    def __init__(self,nom,niveau):
         
         """Constructeur"""
-        self.util = util()
-        print(self.util.niveau)
-        self.niveau=self.util.niveau
-        self.__name=self.util.nom        
+        self.niveau=niveau
+        self.__name=nom        
 
 
     @property

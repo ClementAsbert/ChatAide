@@ -13,7 +13,7 @@ class Bot():
         self.attenteReponse = False
         self.exosFini = []
         self.__name = "Bot"
-        
+        self.image = None
 
 
     @property

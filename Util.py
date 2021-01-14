@@ -14,7 +14,7 @@ class util(QWidget):
         self.nom=""
         self.niveau=""
         
-        
+    
     
     def initUI(self):
         self.setWindowTitle(self.title)
