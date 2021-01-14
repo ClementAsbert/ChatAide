@@ -18,10 +18,10 @@ class Chat(QtWidgets.QMainWindow):
         """Construteur de la classe"""
         self.main = QtWidgets.QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
-        self.utilisateur = Utilisateur("Thierry","CE1")
         self.bot = Bot()
         self.ui.setupUi(self)
         self._initSlotButton()
+        
         
         
         
@@ -111,9 +111,10 @@ class Chat(QtWidgets.QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     w = Chat()
-    w.setWindowTitle(w.utilisateur.name+' - '+w.utilisateur.niveau)
     w.show()
     w.connectDB()
+    w.utilisateur = Utilisateur()
+    w.setWindowTitle(w.utilisateur.name+' - '+w.utilisateur.niveau)
     w.salutationBot()
 
     sys.exit(app.exec_())

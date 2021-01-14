@@ -8,7 +8,7 @@ class App(QWidget):
 
     def __init__(self,image):
         super().__init__()
-        self.title = 'PyQt5 image'
+        self.title = 'Exercice Imagé'
         self.image = image
         self.initUI()
         
